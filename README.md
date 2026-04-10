@@ -85,7 +85,7 @@ Use this if the computer you are working on has an NVIDIA GPU. We still use Dock
 
 ##  Shared Troubleshooting & Diagnostics
 
-### ### 1. Verify the Connection
+### 1. Verify the Connection
 Regardless of setup, open a web browser on your laptop and go to:
 `http://localhost:8000/models`
 * **Success:** You see a JSON list of your `.pth` files.
@@ -93,7 +93,7 @@ Regardless of setup, open a web browser on your laptop and go to:
     * *Remote Setup:* Your SSH tunnel is closed or port 8000 is blocked.
     * *Local Setup:* The Docker container crashed. Run `docker logs dino`.
 
-### ### 2. Common Fixes
+### 2. Common Fixes
 * **404 Error:** Your `server.py` is missing the `@app.get("/models")` route. Update the file and rebuild with `docker build --no-cache -t dino-backend .`
 * **Predictions not appearing:** Ensure your `text_prompt` in the Napari widget matches the classes the model expects (e.g., `crop . weed`).
 * **Color Logic:** The tool defaults **Blue** for labels containing "crop" and **Red** for labels containing "weed." Any other label will appear **White**.
