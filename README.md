@@ -1,9 +1,9 @@
-## ## Project Description
+## Project Description
 
 This project provides an **interactive, high-resolution annotation and inference tool** specifically tailored for agricultural computer vision. The system performs precision weed detection by leveraging a pretrained **Grounding DINO** model. The original implementation of this tool can be found here [UAV Weed Detection](https://github.com/smAIL-WS/uav_weed_detection.git).
 
 
-### ### Key Capabilities
+### Key Capabilities
 
 * **Precision Agriculture Focus:** Optimized for identifying "crop" and "weed" instances in complex, high-texture field environments.
 * **Sliding Window Inference:** To maintain the spatial resolution necessary for detecting small weed sprouts in high-resolution drone or tractor-mounted imagery, the tool implements a sliding window protocol. This prevents the loss of detail caused by standard image resizing.
@@ -16,10 +16,10 @@ This implementation guide covers two deployment strategies using **Docker**. Whe
 
 
 
-# ## 🏢 Scenario 1: Headless GPU Server (Remote Inference)
+##  Scenario 1: Headless GPU Server (Remote Inference)
 Use this if you have a powerful GPU server in a different location and you are using a standard laptop for the Napari interface.
 
-### ### Phase 1: Server Setup (The "Engine")
+### Phase 1: Server Setup (The "Engine")
 1.  **Organize Files:** Create a folder named `dino_backend`. Place your `server.py`, `config.py`, and `Dockerfile` inside.
 2.  **Prepare Models:** Create a subfolder `/checkpoints` and place your `.pth` files there.
 3.  **Build Image:** Open the server terminal in that folder and run:
@@ -33,7 +33,7 @@ Use this if you have a powerful GPU server in a different location and you are u
       dino-backend
     ```
 
-### ### Phase 2: Local Laptop Setup (The "Interface")
+### Phase 2: Local Laptop Setup (The "Interface")
 1.  **Conda Env:** Open **Anaconda Prompt** on your laptop.
     ```bash
     conda create -n napari-dino python=3.10 -y
@@ -44,16 +44,16 @@ Use this if you have a powerful GPU server in a different location and you are u
     `ssh -L 8000:localhost:8000 your_user@your_server_ip`
     *Note: Keep this window open at all times while using the tool.*
 
-### ### Phase 3: Launching
+### Phase 3: Launching
 1.  In the **Anaconda Prompt**, navigate to your `plugin.py` folder.
 2.  Run: `python plugin.py`
 
 ---
 
-# ## 🏎️ Scenario 2: Local GPU System (Dockerized)
+##  Scenario 2: Local GPU System (Dockerized)
 Use this if the computer you are working on has an NVIDIA GPU. We still use Docker to avoid installing 50+ AI libraries directly on your Windows system.
 
-### ### Phase 1: Local Docker Setup (The "Engine")
+### Phase 1: Local Docker Setup (The "Engine")
 1.  **Organize Files:** Create a folder on your Windows machine (e.g., `C:\napari_tool`). Place `server.py`, `config.py`, and `Dockerfile` inside.
 2.  **Prepare Models:** Create a folder `C:\napari_tool\checkpoints` and put your `.pth` files there.
 3.  **Build Image:** Open **PowerShell** in that folder and run:
@@ -68,7 +68,7 @@ Use this if the computer you are working on has an NVIDIA GPU. We still use Dock
     ```
     *Note: You do NOT need an SSH tunnel for this setup.*
 
-### ### Phase 2: Local Laptop Setup (The "Interface")
+### Phase 2: Local Laptop Setup (The "Interface")
 1.  **Conda Env:** Open **Anaconda Prompt**.
     ```bash
     conda create -n napari-dino python=3.10 -y
@@ -76,14 +76,14 @@ Use this if the computer you are working on has an NVIDIA GPU. We still use Dock
     pip install "napari[all]" magicgui requests opencv-python-headless torch torchvision
     ```
 
-### ### Phase 3: Launching
+### Phase 3: Launching
 1.  Ensure the Docker container is running (`docker ps`).
 2.  In the **Anaconda Prompt**, navigate to your `plugin.py` folder.
 3.  Run: `python plugin.py`
 
 ---
 
-# ## 🔍 Shared Troubleshooting & Diagnostics
+##  Shared Troubleshooting & Diagnostics
 
 ### ### 1. Verify the Connection
 Regardless of setup, open a web browser on your laptop and go to:
@@ -98,7 +98,7 @@ Regardless of setup, open a web browser on your laptop and go to:
 * **Predictions not appearing:** Ensure your `text_prompt` in the Napari widget matches the classes the model expects (e.g., `crop . weed`).
 * **Color Logic:** The tool defaults **Blue** for labels containing "crop" and **Red** for labels containing "weed." Any other label will appear **White**.
 
-### ### 3. Restarting the Engine
+### 3. Restarting the Engine
 If you change your model weights or the `server.py` code, you must refresh the container:
 ```bash
 docker stop dino
